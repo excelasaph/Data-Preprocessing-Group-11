@@ -14,7 +14,7 @@ import os
 
 def install_requirements():
     """Install required packages."""
-    print("📦 Installing required packages...")
+    print("Installing required packages...")
     try:
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
         print("✅ All packages installed successfully!")
@@ -25,7 +25,7 @@ def install_requirements():
 
 def check_files():
     """Check if all required files exist."""
-    print("🔍 Checking for required files...")
+    print("Checking for required files...")
     
     required_files = [
         "models/facial_recognition_xgboost.joblib",
@@ -61,7 +61,7 @@ def check_files():
 
 def main():
     """Main setup function."""
-    print("🚀 Setting up Biometric Security System Demo")
+    print("Setting up Biometric Security System Demo")
     print("=" * 50)
     
     # Install requirements
@@ -74,8 +74,8 @@ def main():
         print("❌ Setup failed - missing required files.")
         return False
     
-    print("\n🎉 Setup completed successfully!")
-    print("🔐 You can now run the demo with: python system_demo.py")
+    print("\n Setup completed successfully!")
+    print("You can now run the demo with: python system_demo.py")
     return True
 
 if __name__ == "__main__":
