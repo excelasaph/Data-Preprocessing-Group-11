@@ -12,7 +12,7 @@ This project implements a secure, multimodal user authentication and product rec
 - **Facial Recognition**: XGBoost-based face recognition using color histogram features
 - **Voiceprint Verification**: Random Forest-based voice verification using MFCC features
 - **Product Recommendation**: Personalized product category predictions
-- **Data Augmentation**: Comprehensive image and audio augmentation pipeline
+- **Data Augmentation**: Image and audio augmentation pipeline
 - **Interactive Demo**: Real-time system demonstration with unauthorized access simulation
 - **Security Features**: Multi-factor authentication with clear denial pathways
 
@@ -32,11 +32,11 @@ This project implements a secure, multimodal user authentication and product rec
          │                       │                       │
          ▼                       ▼                       ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│              Authentication & Recommendation Engine              │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │
-│  │   Face      │  │   Voice     │  │   Product               │ │
-│  │   Auth      │  │   Verify    │  │   Recommend             │ │
-│  └─────────────┘  └─────────────┘  └─────────────────────────┘ │
+│              Authentication & Recommendation Engine             │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
+│  │   Face      │  │   Voice     │  │   Product               │  │
+│  │   Auth      │  │   Verify    │  │   Recommend             │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -52,7 +52,7 @@ This project implements a secure, multimodal user authentication and product rec
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/excelasaph/Data-Preprocessing-Group-11.git
    cd Data-Preprocessing-Group-11
    ```
 
@@ -74,14 +74,7 @@ This project implements a secure, multimodal user authentication and product rec
 ## System Demo
 
 ### Demo Video
-📹 **[Watch the System Demo on YouTube](https://youtube.com/watch?v=YOUR_VIDEO_ID)**
-
-The demo showcases:
-- Real-time facial recognition
-- Voiceprint verification
-- Personalized product recommendations
-- Unauthorized access simulation
-- Interactive menu system
+**[Watch the System Demo on YouTube](https://youtube.com/watch?v=YOUR_VIDEO_ID)**
 
 ### Demo Features
 
@@ -147,6 +140,7 @@ The demo showcases:
 - **Purchase Patterns**: Transaction frequency and amounts
 - **Temporal Features**: Purchase date encoding
 - **Categorical Encoding**: One-hot encoding for platforms and sentiments
+- **Output**: `merged_customer_data.csv`
 
 ## Machine Learning Models
 
@@ -175,36 +169,39 @@ The demo showcases:
 
 ```
 Data-Preprocessing-Group-11/
-├── Data/                          # Raw data collection
-│   ├── audios/                    # Original audio samples
-│   ├── pictures/                  # Original images
-│   │   ├── neutral/              # Neutral expressions
-│   │   ├── smilling/             # Smiling expressions
-│   │   └── surprised/            # Surprised expressions
-│   └── datasets/                  # Customer data
+├── Data/                          
+│   ├── audios/                   
+│   ├── pictures/                  
+│   │   ├── neutral/              
+│   │   ├── smilling/            
+│   │   └── surprised/            
+│   └── datasets/                  
 │       ├── customer_social_profiles.csv
 │       └── customer_transactions.csv
-├── Datasets/                      # Processed datasets
-│   ├── image_features.csv         # Extracted image features
-│   ├── audio_features.csv         # Extracted audio features
-│   └── merged_customer_data.csv   # Merged customer data
-├── models/                        # Trained models
+├── Datasets/                      
+│   ├── image_features.csv         
+│   ├── audio_features.csv         
+│   └── merged_customer_data.csv   
+├── models/                        
 │   ├── facial_recognition_xgboost_model.joblib
 │   ├── voiceprint_verification_model.joblib
 │   └── product_recommendation_model.pkl
-├── encoders/                      # Feature scalers
+├── encoders/                      
 │   ├── voice_feature_scaler.joblib
 │   ├── product_recommendation_scaler.pkl
 │   └── facial_recognition_label_encoder.joblib
-├── Notebooks/                     # Jupyter notebooks
+├── Notebooks/                     
 │   ├── Audio_Processing_Features.ipynb
 │   ├── Data_Merging_Product_Recommendation_Model_Training.ipynb
 │   └── Image_processing&_Facial_recognition_model.ipynb
-├── augmented/                     # Augmented images
-├── system_demo.py                 # Main demo application
-├── setup_demo.py                  # Environment setup
-├── requirements.txt               # Python dependencies
-└── README.md                     # Project documentation
+├── report/                        
+│   ├── report.md                  
+│   └── report.pdf                 
+├── augmented/                     
+├── system_demo.py                 
+├── setup_demo.py                  
+├── requirements.txt               
+└── README.md                     
 ```
 
 ## Technical Details

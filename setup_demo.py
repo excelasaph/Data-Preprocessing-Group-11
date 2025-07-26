@@ -17,10 +17,10 @@ def install_requirements():
     print("Installing required packages...")
     try:
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
-        print("✅ All packages installed successfully!")
+        print("All packages installed successfully!")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"❌ Error installing packages: {e}")
+        print(f"Error installing packages: {e}")
         return False
 
 def check_files():
@@ -50,13 +50,13 @@ def check_files():
             missing_files.append(file_path)
     
     if missing_files:
-        print("❌ Missing required files:")
+        print("Missing required files:")
         for file_path in missing_files:
             print(f"   - {file_path}")
-        print("\n⚠️  Please ensure all models are trained and data files are present.")
+        print("\n Please ensure all models are trained and data files are present.")
         return False
     else:
-        print("✅ All required files found!")
+        print("All required files found!")
         return True
 
 def main():
@@ -66,12 +66,12 @@ def main():
     
     # Install requirements
     if not install_requirements():
-        print("❌ Setup failed during package installation.")
+        print("Setup failed during package installation.")
         return False
     
     # Check files
     if not check_files():
-        print("❌ Setup failed - missing required files.")
+        print("Setup failed - missing required files.")
         return False
     
     print("\n Setup completed successfully!")
