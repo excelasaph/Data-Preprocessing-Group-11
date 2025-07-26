@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
-"""
-System Demonstration Script
-===========================
-This script demonstrates the complete transaction flow:
-1. Face recognition for authentication
-2. Voice verification for transaction approval
-3. Product recommendation system
-4. Handles both authorized and unauthorized attempts
 
-Author: Data Preprocessing Group 11
-Date: July 26, 2025
-"""
 
 import os
 import sys
@@ -61,42 +50,42 @@ class BiometricSecuritySystem:
             3: 'kanisa'
         }
         
-        print("🔐 Biometric Security System Initialized Successfully!")
+        print(" Biometric Security System Initialized Successfully!")
         print("=" * 60)
     
     def load_models(self):
         """Load all trained models and scalers."""
         try:
             # Load facial recognition model
-            self.face_model = joblib.load(os.path.join(self.models_path, 'facial_recognition_xgboost.joblib'))
-            print("✅ Facial recognition model loaded")
+            self.face_model = joblib.load(os.path.join(self.models_path, 'facial_recognition_xgboost_model.joblib'))
+            print("Facial recognition model loaded")
             
             # Load voice verification model
             self.voice_model = joblib.load(os.path.join(self.models_path, 'voiceprint_verification_model.joblib'))
-            print("✅ Voice verification model loaded")
+            print(" Voice verification model loaded")
             
             # Load product recommendation model
             self.product_model = joblib.load(os.path.join(self.models_path, 'product_recommendation_model.pkl'))
-            print("✅ Product recommendation model loaded")
+            print(" Product recommendation model loaded")
             
             # Load scalers
             self.voice_scaler = joblib.load(os.path.join(self.encoders_path, 'voice_feature_scaler.joblib'))
-            print("✅ Voice feature scaler loaded")
+            print(" Voice feature scaler loaded")
             
             self.product_scaler = joblib.load(os.path.join(self.encoders_path, 'product_recommendation_scaler.pkl'))
-            print("✅ Product recommendation scaler loaded")
+            print(" Product recommendation scaler loaded")
             
         except Exception as e:
-            print(f"❌ Error loading models: {e}")
+            print(f" Error loading models: {e}")
             sys.exit(1)
     
     def load_customer_data(self):
         """Load customer transaction data."""
         try:
             self.customer_data = pd.read_csv(os.path.join(self.datasets_path, 'merged_customer_data.csv'))
-            print("✅ Customer data loaded")
+            print(" Customer data loaded")
         except Exception as e:
-            print(f"❌ Error loading customer data: {e}")
+            print(f" Error loading customer data: {e}")
             sys.exit(1)
     
     def extract_face_features(self, image_path):
@@ -117,7 +106,7 @@ class BiometricSecuritySystem:
             return hist.reshape(1, -1)
             
         except Exception as e:
-            print(f"❌ Error extracting face features: {e}")
+            print(f" Error extracting face features: {e}")
             return None
     
     def extract_voice_features(self, audio_path):
@@ -159,7 +148,7 @@ class BiometricSecuritySystem:
             return feature_df.values
             
         except Exception as e:
-            print(f"❌ Error extracting voice features: {e}")
+            print(f"Error extracting voice features: {e}")
             return None
     
     def authenticate_face(self, image_path):
@@ -195,18 +184,18 @@ class BiometricSecuritySystem:
                 predicted_label = int(prediction[0])
                 predicted_user = self.face_label_mapping.get(predicted_label, f"unknown_{predicted_label}")
             
-            print(f"   👤 Predicted identity: {predicted_user}")
-            print(f"   📊 Confidence: {confidence:.2%}")
+            print(f"    Predicted identity: {predicted_user}")
+            print(f"    Confidence: {confidence:.2%}")
             
             # Check if user is authorized and confidence is high enough
             is_authorized = predicted_user.lower() in [user.lower() for user in self.authorized_users]
             confidence_threshold = 0.60  # Lower threshold to accommodate model variations
             
             if is_authorized and confidence >= confidence_threshold:
-                print(f"   ✅ Face authentication SUCCESSFUL for {predicted_user}")
+                print(f"    Face authentication SUCCESSFUL for {predicted_user}")
                 return True, predicted_user
             else:
-                print(f"   ❌ Face authentication FAILED")
+                print(f"    Face authentication FAILED")
                 if not is_authorized:
                     print(f"      Reason: User '{predicted_user}' not in authorized list")
                 if confidence < confidence_threshold:
@@ -214,12 +203,12 @@ class BiometricSecuritySystem:
                 return False, predicted_user
                 
         except Exception as e:
-            print(f"   ❌ Face authentication error: {e}")
+            print(f"    Face authentication error: {e}")
             return False, "unknown"
     
     def verify_voice(self, audio_path, expected_user):
         """Verify voice matches the expected user."""
-        print(f"🎤 Analyzing voice sample: {os.path.basename(audio_path)}")
+        print(f" Analyzing voice sample: {os.path.basename(audio_path)}")
         
         # Extract voice features
         voice_features = self.extract_voice_features(audio_path)
@@ -240,8 +229,8 @@ class BiometricSecuritySystem:
             else:
                 predicted_user = str(prediction[0])
             
-            print(f"   🗣️  Predicted voice identity: {predicted_user}")
-            print(f"   📊 Voice confidence: {confidence:.2%}")
+            print(f"     Predicted voice identity: {predicted_user}")
+            print(f"    Voice confidence: {confidence:.2%}")
             
             # Check if voice matches expected user OR if it's an authorized user with reasonable confidence
             voice_match = predicted_user.lower() == expected_user.lower()
@@ -253,14 +242,14 @@ class BiometricSecuritySystem:
             # 2. Voice identifies an authorized user (even if different from face) with reasonable confidence
             if (voice_match and confidence >= confidence_threshold) or \
                (is_authorized_voice and confidence >= confidence_threshold):
-                print(f"   ✅ Voice verification SUCCESSFUL")
+                print(f"    Voice verification SUCCESSFUL")
                 if not voice_match:
-                    print(f"   ℹ️  Note: Voice identified as '{predicted_user}' but face was '{expected_user}'")
-                    print(f"   ℹ️  Proceeding with voice-identified user: {predicted_user}")
+                    print(f"    Note: Voice identified as '{predicted_user}' but face was '{expected_user}'")
+                    print(f"     Proceeding with voice-identified user: {predicted_user}")
                     return True, predicted_user  # Return the voice-identified user
                 return True, expected_user
             else:
-                print(f"   ❌ Voice verification FAILED")
+                print(f"    Voice verification FAILED")
                 if not is_authorized_voice:
                     print(f"      Reason: Voice identity '{predicted_user}' not in authorized list")
                 if confidence < confidence_threshold:
@@ -268,12 +257,12 @@ class BiometricSecuritySystem:
                 return False, expected_user
                 
         except Exception as e:
-            print(f"   ❌ Voice verification error: {e}")
+            print(f"    Voice verification error: {e}")
             return False, expected_user
     
     def get_product_recommendations(self, user_id):
         """Get product recommendations for authenticated user."""
-        print(f"🛍️  Generating product recommendations for user: {user_id}")
+        print(f" Generating product recommendations for user: {user_id}")
         
         # Use intelligent user profiles for reliable recommendations
         # This avoids ML model compatibility issues while providing personalized results
@@ -289,11 +278,11 @@ class BiometricSecuritySystem:
             'engagement': 0.65, 'interest': 0.60, 'category': 'Electronics'
         })
         
-        print(f"   ✅ User profile loaded successfully")
-        print(f"   📈 User Profile:")
+        print(f"   User profile loaded successfully")
+        print(f"   User Profile:")
         print(f"      - Engagement Score: {profile['engagement']:.2f}")
         print(f"      - Purchase Interest: {profile['interest']:.2f}")
-        print(f"   🎯 Recommended Category: {profile['category']}")
+        print(f"    Recommended Category: {profile['category']}")
         
         return profile['category'], {
             'engagement': profile['engagement'],
@@ -304,7 +293,7 @@ class BiometricSecuritySystem:
     def simulate_unauthorized_attempt(self):
         """Simulate an unauthorized access attempt."""
         print("\n" + "="*60)
-        print("🚨 SIMULATING UNAUTHORIZED ATTEMPT")
+        print(" SIMULATING UNAUTHORIZED ATTEMPT")
         print("="*60)
         
         print("👤 Unknown person attempting to access the system...")
@@ -313,7 +302,7 @@ class BiometricSecuritySystem:
         test_image_path = os.path.join(self.data_path, "pictures", "neutral", "anne.jpg")
         
         if os.path.exists(test_image_path):
-            print("🔍 Analyzing face image...")
+            print(" Analyzing face image...")
             # Actually run face recognition but simulate unauthorized result
             face_features = self.extract_face_features(test_image_path)
             if face_features is not None:
@@ -322,74 +311,74 @@ class BiometricSecuritySystem:
                     confidence = self.face_model.predict_proba(face_features).max()
                     
                     # Simulate unauthorized by setting low confidence threshold
-                    print("   👤 Predicted identity: unknown_person")
-                    print(f"   📊 Confidence: {confidence:.2%}")
+                    print("    Predicted identity: unknown_person")
+                    print(f"    Confidence: {confidence:.2%}")
                     
                     if confidence < 0.80:  # Higher threshold for unauthorized demo
-                        print("   ❌ Face authentication FAILED")
+                        print("    Face authentication FAILED")
                         print("      Reason: Low confidence - possible unauthorized access")
                     else:
-                        print("   ❌ Face authentication FAILED")
+                        print("    Face authentication FAILED")
                         print("      Reason: User not in authorized database")
                         
                 except Exception:
-                    print("   👤 Predicted identity: unknown_person")
-                    print("   📊 Confidence: 45.2%")
-                    print("   ❌ Face authentication FAILED")
+                    print("    Predicted identity: unknown_person")
+                    print("    Confidence: 45.2%")
+                    print("    Face authentication FAILED")
                     print("      Reason: User 'unknown_person' not in authorized list")
             else:
-                print("   ❌ Face recognition failed - poor image quality")
+                print("    Face recognition failed - poor image quality")
         else:
             # Fallback to simulated output
-            print("🔍 Analyzing face image...")
-            print("   👤 Predicted identity: unknown_person")
-            print("   📊 Confidence: 45.2%")
-            print("   ❌ Face authentication FAILED")
+            print(" Analyzing face image...")
+            print("    Predicted identity: unknown_person")
+            print("    Confidence: 45.2%")
+            print("    Face authentication FAILED")
             print("      Reason: User 'unknown_person' not in authorized list")
             print("      Reason: Low confidence (45.2% < 60.0%)")
         
-        print("\n🚫 ACCESS DENIED - UNAUTHORIZED ATTEMPT DETECTED")
-        print("📧 Security alert sent to administrators")
-        print("📝 Incident logged with timestamp and image capture")
+        print("\n ACCESS DENIED - UNAUTHORIZED ATTEMPT DETECTED")
+        print(" Security alert sent to administrators")
+        print(" Incident logged with timestamp and image capture")
         
         return False
     
     def run_full_transaction(self, user_name, image_path, audio_path):
         """Run a complete transaction simulation."""
         print("\n" + "="*60)
-        print(f"🔄 STARTING TRANSACTION SIMULATION FOR: {user_name.upper()}")
+        print(f" STARTING TRANSACTION SIMULATION FOR: {user_name.upper()}")
         print("="*60)
         
         # Step 1: Face Authentication
-        print("\n📝 STEP 1: FACE AUTHENTICATION")
+        print("\n STEP 1: FACE AUTHENTICATION")
         print("-" * 30)
         face_auth_success, predicted_user = self.authenticate_face(image_path)
         
         if not face_auth_success:
-            print("\n🚫 TRANSACTION FAILED - Face authentication unsuccessful")
+            print("\n TRANSACTION FAILED - Face authentication unsuccessful")
             return False
         
         # Step 2: Voice Verification
-        print(f"\n📝 STEP 2: VOICE VERIFICATION")
+        print(f"\n STEP 2: VOICE VERIFICATION")
         print("-" * 30)
         voice_auth_success, final_user = self.verify_voice(audio_path, predicted_user)
         
         if not voice_auth_success:
-            print("\n🚫 TRANSACTION FAILED - Voice verification unsuccessful")
+            print("\n TRANSACTION FAILED - Voice verification unsuccessful")
             return False
         
         # Step 3: Product Recommendation
-        print(f"\n📝 STEP 3: PRODUCT RECOMMENDATION SYSTEM")
+        print(f"\n STEP 3: PRODUCT RECOMMENDATION SYSTEM")
         print("-" * 40)
         recommended_category, user_profile = self.get_product_recommendations(final_user)
         
         # Step 4: Transaction Approval
-        print(f"\n📝 STEP 4: TRANSACTION APPROVAL")
+        print(f"\n STEP 4: TRANSACTION APPROVAL")
         print("-" * 30)
-        print("✅ All authentication steps passed successfully!")
-        print("✅ User authorized to proceed with transaction")
-        print(f"✅ Recommended products: {recommended_category}")
-        print("\n🎉 TRANSACTION COMPLETED SUCCESSFULLY!")
+        print("All authentication steps passed successfully!")
+        print(" User authorized to proceed with transaction")
+        print(f" Recommended products: {recommended_category}")
+        print("\n TRANSACTION COMPLETED SUCCESSFULLY!")
         
         return True
     
@@ -397,15 +386,15 @@ class BiometricSecuritySystem:
         """Display main menu and handle user interactions."""
         while True:
             print("\n" + "="*60)
-            print("🔐 BIOMETRIC SECURITY SYSTEM - DEMO MENU")
+            print(" BIOMETRIC SECURITY SYSTEM - DEMO MENU")
             print("="*60)
-            print("1. 👤 Simulate Authorized Transaction (Anne)")
-            print("2. 👤 Simulate Authorized Transaction (Christophe)")
-            print("3. 👤 Simulate Authorized Transaction (Excel)")
-            print("4. 👤 Simulate Authorized Transaction (Kanisa)")
-            print("5. 🚨 Simulate Unauthorized Attempt")
-            print("6. 🔍 Custom Transaction (Specify paths)")
-            print("7. ❌ Exit")
+            print("1.  Simulate Authorized Transaction (Anne)")
+            print("2.  Simulate Authorized Transaction (Christophe)")
+            print("3.  Simulate Authorized Transaction (Excel)")
+            print("4.  Simulate Authorized Transaction (Kanisa)")
+            print("5.  Simulate Unauthorized Attempt")
+            print("6.  Custom Transaction (Specify paths)")
+            print("7.  Exit")
             print("-" * 60)
             
             choice = input("Enter your choice (1-7): ").strip()
@@ -423,11 +412,11 @@ class BiometricSecuritySystem:
             elif choice == '6':
                 self.custom_transaction()
             elif choice == '7':
-                print("\n👋 Thank you for using the Biometric Security System!")
-                print("🔒 System shutting down safely...")
+                print("\n Thank you for using the Biometric Security System!")
+                print(" System shutting down safely...")
                 break
             else:
-                print("❌ Invalid choice. Please select 1-7.")
+                print("Invalid choice. Please select 1-7.")
             
             input("\nPress Enter to continue...")
     
@@ -451,11 +440,11 @@ class BiometricSecuritySystem:
         
         # Check if files exist
         if not os.path.exists(image_path):
-            print(f"❌ Image not found: {image_path}")
+            print(f" Image not found: {image_path}")
             return
         
         if not os.path.exists(audio_path):
-            print(f"❌ Audio not found: {audio_path}")
+            print(f" Audio not found: {audio_path}")
             return
         
         # Run the transaction
@@ -463,7 +452,7 @@ class BiometricSecuritySystem:
     
     def custom_transaction(self):
         """Allow user to specify custom image and audio paths."""
-        print("\n📝 CUSTOM TRANSACTION SETUP")
+        print("\n CUSTOM TRANSACTION SETUP")
         print("-" * 30)
         
         image_path = input("Enter path to face image: ").strip()
@@ -471,11 +460,11 @@ class BiometricSecuritySystem:
         user_name = input("Enter expected user name: ").strip()
         
         if not os.path.exists(image_path):
-            print(f"❌ Image file not found: {image_path}")
+            print(f" Image file not found: {image_path}")
             return
         
         if not os.path.exists(audio_path):
-            print(f"❌ Audio file not found: {audio_path}")
+            print(f" Audio file not found: {audio_path}")
             return
         
         self.run_full_transaction(user_name, image_path, audio_path)
@@ -483,8 +472,8 @@ class BiometricSecuritySystem:
 
 def main():
     """Main function to run the biometric security system demo."""
-    print("🚀 Initializing Biometric Security System Demo...")
-    print("📊 Loading models and data...")
+    print(" Initializing Biometric Security System Demo...")
+    print(" Loading models and data...")
     
     try:
         # Initialize the system
@@ -494,11 +483,11 @@ def main():
         system.main_menu()
         
     except KeyboardInterrupt:
-        print("\n\n⚡ Demo interrupted by user")
-        print("🔒 System shutting down safely...")
+        print("\n\n Demo interrupted by user")
+        print(" System shutting down safely...")
     except Exception as e:
-        print(f"\n❌ Critical system error: {e}")
-        print("🔒 System shutting down due to error...")
+        print(f"\nCritical system error: {e}")
+        print(" System shutting down due to error...")
 
 
 if __name__ == "__main__":
