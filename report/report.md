@@ -46,7 +46,7 @@ This report shows the implementation of a multimodal biometric security system t
 I started by gathering photos from all four team members, making sure to capture different facial expressions (neutral, smiling, surprised) to create a diverse dataset. This was crucial because facial recognition models need to handle variations in expressions. I organized the data systematically, storing each person's images in separate folders by expression type.
 
 #### Building the Image Augmentation Pipeline:
-Thinking about how to go about the augmentation, I designed a strategy to increase our dataset size while maintaining realistic variations. Instead of just applying random transformations, I carefully chose specific augmentations that would help the model generalize better:
+Thinking of how to go about the augmentation, I designed a strategy to increase our dataset size while maintaining realistic variations. Instead of just applying random transformations, I carefully chose specific augmentations that would help the model generalize better:
 
 ```python
 # Image augmentation pipeline
@@ -136,7 +136,7 @@ For my model training, I chose Random Forest because it handles both numerical a
 
 ### 3. Christophe Gakwaya - Audio Processing & Voiceprint Verification Model
 
-#### How I Approached Audio Data Collection:
+#### How I Approached the Audio Data Collection:
 First, I recorded voice samples from all team members saying two different phrases: "Yes, approve" and "Confirm transaction." Then, I chose these phrases because they represent realistic authentication scenarios. I made sure to record in a quiet environment and asked everyone to speak naturally, as this would make the voice recognition more reliable in real-world conditions.
 
 #### Designing the Audio Augmentation Pipeline:
