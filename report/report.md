@@ -20,19 +20,22 @@ This report details the implementation of a multimodal biometric security system
 
 ### Model Metrics
 #### Product Recommendation Model:
-- `Accuracy` - 65% 
-- `F1-Score` - 61%
-- `Loss` - 0.8349
+- **Accuracy**: 65% 
+- **F1-Score** - 61%
+- **Loss** - 0.8349
 
 #### Facial Recognition Model:
-- - `Accuracy` - 65% 
-- `F1-Score` - 61%
-- `Loss` - 0.8349
+- **Accuracy**: 90% 
+- **F1-Score** - 90%
+- **Loss** - 0.6440
 
 #### Voiceprint Verification Model:
-- `Accuracy` - 65% 
-- `F1-Score` - 61%
-- `Loss` - 0.8349
+- **Accuracy**: 85.71%
+- **F1-Score** - 67%
+- **Loss** - 0.5188
+
+### Overall Evaluation Metrics
+- **Accuracy**: Face (90%), Voice (85.71%), Product (65%)
 ---
 
 ## Team Member Contributions
@@ -130,11 +133,6 @@ def merge_customer_data(social_profiles, transactions):
 - Best parameters: max_depth=None, min_samples_leaf=2, min_samples_split=2, n_estimators=300
 - Created model evaluation and feature importance analysis
 
-**Product Recommendation Model Metrics:**
-- `Accuracy` - 65% 
-- `F1-Score` - 61%
-- `Loss` - 0.8349
-
 **Files Created/Modified:**
 - `Data/datasets/` - Original customer datasets
 - `Datasets/merged_customer_data.csv` - Merged dataset
@@ -150,8 +148,8 @@ def merge_customer_data(social_profiles, transactions):
 
 **Audio Data Collection:**
 - Collected 8 original audio samples (4 team members × 2 phrases)
-- Implemented comprehensive audio augmentation pipeline
-- Created standardized audio processing workflow
+- Implemented audio augmentation pipeline
+- Created audio processing workflow
 
 **Audio Augmentation Implementation:**
 ```python
@@ -178,7 +176,7 @@ def augment_audio(y, sr):
 - **Processing**: Top_db=30 for silence trimming
 
 **Feature Extraction Development:**
-- Implemented MFCC feature extraction (20 coefficients)
+- Implemented **MFCC** feature extraction (20 coefficients)
 - Created spectral feature extraction (roll-off, RMS energy)
 - Developed 44-dimensional feature vectors
 - Generated `audio_features.csv` with 32 samples (8 originals × 4 augmentations)
@@ -188,12 +186,6 @@ def augment_audio(y, sr):
 - Achieved 85.71% accuracy on test set
 - Created comprehensive model evaluation
 - Developed confidence-based verification system
-
-**Technical Achievements:**
-- Successfully processed 32 augmented audio samples
-- Achieved 85.71% voice verification accuracy
-- Implemented robust audio feature extraction
-- Created comprehensive audio processing documentation
 
 **Files Created/Modified:**
 - `Data/audios/` - Original audio collection
@@ -209,8 +201,8 @@ def augment_audio(y, sr):
 #### Task 4: System Demo and Integration
 
 **Demo System Architecture:**
-- Developed comprehensive `BiometricSecuritySystem` class
-- Implemented interactive menu system
+- Developed `BiometricSecuritySystem` class
+- Implemented interactive menu system for the demo simulation
 - Created real-time authentication workflow
 - Developed unauthorized access simulation
 
@@ -267,19 +259,13 @@ def main_menu(self):
 - Created `setup_demo.py` for automated environment setup
 - Implemented dependency management with `requirements.txt`
 - Developed file validation and error handling
-- Created comprehensive installation procedures
-
-**Technical Achievements:**
-- Successfully integrated all three models into unified system
-- Implemented comprehensive error handling and validation
-- Created user-friendly interactive demo interface
-- Developed robust setup and deployment procedures
+- Saw that installation procedures are handled
 
 **Files Created/Modified:**
 - `system_demo.py` - Main demo application
 - `setup_demo.py` - Environment setup script
 - `requirements.txt` - Python dependencies
-- `README.md` - Comprehensive project documentation
+- `README.md` - Project documentation
 
 ---
 
@@ -288,139 +274,6 @@ def main_menu(self):
 **Repository**: [https://github.com/excelasaph/Data-Preprocessing-Group-11](https://github.com/excelasaph/Data-Preprocessing-Group-11)  
 **Main Branch**: main  
 **Contributors**: 4 team members  
-**Total Commits**: 25+ commits  
+**Total Commits**: 30+ commits  
 **Languages**: Python, Jupyter Notebook, Markdown  
 **Technologies**: OpenCV, Librosa, Scikit-learn, XGBoost, Joblib
-
-### Repository Structure
-```
-Data-Preprocessing-Group-11/
-├── Data/                          
-│   ├── audios/                   
-│   ├── pictures/                  
-│   │   ├── neutral/              
-│   │   ├── smilling/            
-│   │   └── surprised/            
-│   └── datasets/                  
-│       ├── customer_social_profiles.csv
-│       └── customer_transactions.csv
-├── Datasets/                      
-│   ├── image_features.csv         
-│   ├── audio_features.csv         
-│   └── merged_customer_data.csv   
-├── models/                        
-│   ├── facial_recognition_xgboost_model.joblib
-│   ├── voiceprint_verification_model.joblib
-│   └── product_recommendation_model.pkl
-├── encoders/                      
-│   ├── voice_feature_scaler.joblib
-│   ├── product_recommendation_scaler.pkl
-│   └── facial_recognition_label_encoder.joblib
-├── Notebooks/                     
-│   ├── Audio_Processing_Features.ipynb
-│   ├── Data_Merging_Product_Recommendation_Model_Training.ipynb
-│   └── Image_processing&_Facial_recognition_model.ipynb
-├── report/                        
-│   ├── report.md                  
-│   └── report.pdf                 
-├── augmented/                     
-├── system_demo.py                 
-├── setup_demo.py                  
-├── requirements.txt               
-└── README.md                     
-```
-
----
-
-## Assignment Requirements Fulfillment
-
-### ✅ Data Merge
-- **Customer Profiles**: Successfully merged social media profiles with transaction history
-- **Feature Engineering**: Created 15 engineered features for product recommendation
-- **Data Quality**: Implemented comprehensive data cleaning and validation
-- **Output**: `merged_customer_data.csv` with 84 customer records
-
-### ✅ Image Data Collection and Processing
-- **Data Collection**: 4 team members × 3 expressions = 12 original images
-- **Augmentation**: 4 versions per image (original + 3 augmentations) = 48 total
-- **Feature Extraction**: Color histogram features (512 dimensions)
-- **Output**: `image_features.csv` with comprehensive feature set
-
-### ✅ Audio Data Collection and Processing
-- **Data Collection**: 4 team members × 2 phrases = 8 original audio samples
-- **Augmentation**: 4 versions per audio (original + 3 augmentations) = 32 total
-- **Feature Extraction**: MFCC + spectral features (44 dimensions)
-- **Output**: `audio_features.csv` with comprehensive feature set
-
-### ✅ Model Creation
-- **Facial Recognition Model**: XGBoost classifier with 90% accuracy on test set
-- **Voiceprint Verification Model**: Random Forest classifier with 85.71% accuracy
-- **Product Recommendation Model**: Random Forest with GridSearchCV hyperparameter tuning (65% accuracy)
-
-### ✅ System Demonstration
-- **Interactive Demo**: Real-time authentication workflow
-- **Authorized Simulation**: Complete transaction flow for all team members
-- **Unauthorized Simulation**: Security denial demonstration
-- **Custom Transactions**: User-defined input paths
-
-### ✅ Evaluation Metrics
-- **Accuracy**: Face (90%), Voice (85.71%), Product (65%)
-- **F1-Score**: Comprehensive classification reports for all models
-- **Performance Tracking**: Model evaluation and validation procedures
-
----
-
-## Technical Implementation Details
-
-### Authentication Flow
-1. **Face Recognition**: Extract color histogram features → XGBoost prediction
-2. **Voice Verification**: Extract MFCC features → Random Forest prediction
-3. **Multi-factor Validation**: Both modalities must pass for access
-4. **Product Recommendation**: Customer profile analysis → category prediction
-
-### Data Processing Pipeline
-- **Image Processing**: OpenCV-based augmentation and feature extraction
-- **Audio Processing**: Librosa-based augmentation and MFCC extraction
-- **Feature Engineering**: Automated pipeline for customer data
-- **Model Training**: Comprehensive hyperparameter optimization
-
-### Security Features
-- **Confidence Thresholds**: Minimum confidence levels for authentication
-- **Multi-modal Validation**: Sequential face + voice verification
-- **Unauthorized Detection**: Clear denial pathways for failed authentication
-- **Incident Logging**: Security alerts and timestamp tracking
-
----
-
-## Demo Video Information
-
-**Demo Video Link**: [Watch System Demo on YouTube](https://youtube.com/watch?v=YOUR_VIDEO_ID)
-
-### Demo Content
-- **Real-time Facial Recognition**: Live face authentication demonstration
-- **Voiceprint Verification**: Audio processing and voice verification
-- **Product Recommendation**: Personalized category prediction
-- **Unauthorized Access Simulation**: Security denial demonstration
-- **Interactive Menu System**: User-friendly demo interface
-
-### Demo Features Showcased
-1. **Authorized User Transactions**: Complete workflow for all team members
-2. **Multi-modal Authentication**: Sequential face and voice verification
-3. **Product Recommendations**: Personalized category predictions
-4. **Security Measures**: Unauthorized access detection and denial
-5. **System Integration**: Seamless model integration and workflow
-
----
-
-## Conclusion
-
-This project successfully implements a comprehensive multimodal biometric security system that fulfills all assignment requirements. Each team member contributed significantly to different aspects of the system, creating a robust and functional demonstration of multimodal data preprocessing and machine learning techniques.
-
-The system demonstrates advanced capabilities in:
-- **Data Collection and Augmentation**: Comprehensive image and audio processing
-- **Feature Engineering**: Automated feature extraction pipelines
-- **Model Development**: Multiple machine learning models with optimization
-- **System Integration**: Real-time authentication and recommendation system
-- **Security Implementation**: Multi-factor authentication with clear denial pathways
-
-The project serves as an excellent example of multimodal data preprocessing and demonstrates the practical application of machine learning techniques in biometric security systems.
