@@ -18,6 +18,21 @@ This report details the implementation of a multimodal biometric security system
 - **System Integration**: Demo with real-time authentication and unauthorized access simulation
 - **Feature Engineering**: Automated pipeline for image and audio feature extraction
 
+### Model Metrics
+#### Product Recommendation Model:
+- `Accuracy` - 65% 
+- `F1-Score` - 61%
+- `Loss` - 0.8349
+
+#### Facial Recognition Model:
+- - `Accuracy` - 65% 
+- `F1-Score` - 61%
+- `Loss` - 0.8349
+
+#### Voiceprint Verification Model:
+- `Accuracy` - 65% 
+- `F1-Score` - 61%
+- `Loss` - 0.8349
 ---
 
 ## Team Member Contributions
