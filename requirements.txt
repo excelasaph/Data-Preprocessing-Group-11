@@ -1,0 +1,24 @@
+# Requirements for Biometric Security System Demo
+# Data Preprocessing Group 11
+
+# Core ML libraries
+numpy>=1.21.0
+pandas>=1.3.0
+scikit-learn>=1.0.0
+
+# Computer Vision
+opencv-python>=4.5.0
+
+# Audio Processing
+librosa>=0.8.0
+soundfile>=0.10.0
+
+# Model Persistence
+joblib>=1.0.0
+
+# Visualization (optional, for debugging)
+matplotlib>=3.3.0
+seaborn>=0.11.0
+
+# System utilities
+pathlib2>=2.3.0
