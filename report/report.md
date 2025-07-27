@@ -42,12 +42,10 @@ This report shows the implementation of a multimodal biometric security system t
 
 ### 1. Anne Marie Twagirayezu - Image Processing & Facial Recognition Model
 
-#### Task 1: Image Data Collection and Processing
-
 #### My Approach to Image Data Collection:
 I started by gathering photos from all four team members, making sure to capture different facial expressions (neutral, smiling, surprised) to create a diverse dataset. This was crucial because facial recognition models need to handle variations in expressions. I organized the data systematically, storing each person's images in separate folders by expression type.
 
-**Building the Image Augmentation Pipeline:**
+#### Building the Image Augmentation Pipeline:
 Thinking about how to go about the augmentation, I designed a strategy to increase our dataset size while maintaining realistic variations. Instead of just applying random transformations, I carefully chose specific augmentations that would help the model generalize better:
 
 ```python
@@ -66,10 +64,10 @@ def augment_image(image, size=(64, 64)):
 - Developed automated feature extraction pipeline
 - Generated `image_features.csv` with 48 samples (12 originals × 4 augmentations)
 
-**Developing the Feature Extraction System:**
+#### Developing the Feature Extraction System:
 While experimenting with different feature extraction methods, I found that color histograms worked best for our use case. I chose an **8×8×8** RGB histogram because it captures color distribution patterns that are unique to each person while being computationally efficient. This gave us **512-dimensional** feature vectors that provided enough detail without overwhelming the model.
 
-**Training the Facial Recognition Model:**
+#### Training the Facial Recognition Model:
 I tested multiple algorithms (Random Forest, Logistic Regression, and XGBoost) and found that **XGBoost** performed best with **90% accuracy**. The key was tuning the hyperparameters and ensuring the model could handle the variations in our augmented dataset. I also implemented confidence thresholds to make the authentication system more clean.
 
 **Files Created/Modified:**
@@ -83,13 +81,11 @@ I tested multiple algorithms (Random Forest, Logistic Regression, and XGBoost) a
 
 ### 2. Excel Asaph - Data Merging & Product Recommendation Model
 
-#### Task 2: Data Merging and Product Recommendation System
-
-**My Approach to Data Merging:**
+#### Process for Merging Datasets:
 To merge both customer datasets, I began by carefully analyzing both to understand their structure and identify potential challenges. The social profiles had customer IDs like `"A100"` while transactions used numeric IDs like `"100"`, so I had to create a mapping strategy. I also noticed duplicate entries and missing values that needed careful handling.
 
-**Building the Data Preprocessing Pipeline:**
-Here is my approach to clean and merge the data - First, I handled duplicates by aggregating social profiles by customer ID, taking the mean for numerical values and the mode for categorical ones. For transactions, I aggregated by customer ID to get total purchase amounts and transaction counts:
+#### Building the Data Preprocessing Pipeline:
+Here is my approach to cleaning and merging the data - First, I handled duplicates by aggregating social profiles by customer ID, taking the mean for numerical values and the mode for categorical ones. For transactions, I aggregated by customer ID to get total purchase amounts and transaction counts:
 
 ```python
 # Data merging and feature engineering
@@ -126,7 +122,7 @@ def merge_customer_data(social_profiles, transactions):
 - Developed temporal feature extraction (`purchase_date` encoding)
 - Created engagement and purchase pattern metrics
 
-**Training the Product Recommendation Model:**
+#### Training the Product Recommendation Model:
 For my model training, I chose Random Forest because it handles both numerical and categorical features well, and it's robust to overfitting. I used **GridSearchCV** to systematically test different hyperparameter combinations, which helped me find the optimal settings: `max_depth=None`, `min_samples_leaf=2`, `min_samples_split=2`, `n_estimators=300`. The **65% accuracy**, while not perfect, is reasonable given the complexity of predicting product preferences from limited customer data.
 
 **Files Created/Modified:**
@@ -140,12 +136,10 @@ For my model training, I chose Random Forest because it handles both numerical a
 
 ### 3. Christophe Gakwaya - Audio Processing & Voiceprint Verification Model
 
-#### Task 3: Audio Data Collection and Processing
-
-**My Approach to Audio Data Collection:**
+#### How I Approached Audio Data Collection:
 First, I recorded voice samples from all team members saying two different phrases: "Yes, approve" and "Confirm transaction." Then, I chose these phrases because they represent realistic authentication scenarios. I made sure to record in a quiet environment and asked everyone to speak naturally, as this would make the voice recognition more reliable in real-world conditions.
 
-**Building the Audio Augmentation Pipeline:**
+#### Designing the Audio Augmentation Pipeline:
 I designed the augmentation strategy to simulate real-world variations in voice recordings. I chose specific parameters that would help the model handle different speaking conditions:
 
 ```python
@@ -171,10 +165,10 @@ def augment_audio(y, sr):
 - **Trimmed Duration**: 1.49s - 3.04s (after silence removal)
 - **Processing**: Top_db=30 for silence trimming
 
-**Processing and Feature Extraction:**
+#### Processing and Feature Extraction:
 I standardized all audio to 22050 Hz sample rate and trimmed silence using `top_db=30`, which removed unnecessary silence while preserving the important speech content. For feature extraction, I chose **MFCCs** because they capture the spectral characteristics of speech that are unique to each person. I also included spectral **roll-off** and **RMS energy** features to capture additional voice characteristics.
 
-**Training the Voiceprint Verification Model:**
+#### Training the Voiceprint Verification Model:
 For my model selection, I tested several algorithms and found that Random Forest worked best for our voice verification task, achieving **85.71% accuracy**. The model learned to distinguish between the four team members based on their unique voice characteristics captured in the MFCC and spectral features.
 
 **Files Created/Modified:**
@@ -188,12 +182,10 @@ For my model selection, I tested several algorithms and found that Random Forest
 
 ### 4. Kanisa Rebecca Majok Thiak - System Demo Implementation and Simulation
 
-#### Task 4: System Demo and Integration
-
-**My Approach to System Integration:**
+#### Building the Demo System:
 The demo system has to showcase the complete multimodal authentication workflow in a user-friendly way. I wanted to create an interactive experience that would demonstrate both the technical capabilities and the security features of our system. The key challenge was integrating three different models (face, voice, and product recommendation) into a one workflow.
 
-**Building the BiometricSecuritySystem Class:**
+#### Creating the BiometricSecuritySystem Class:
 I created a class in the `system_demo.py` file that loads all the trained models and handles the complete authentication pipeline. 
 
 The system follows a logical sequence: first face authentication, then voice verification, and finally product recommendation. I included proper error handling to ensure the system fails if any step fails:
