@@ -197,8 +197,10 @@ STEP 4: TRANSACTION APPROVAL
 
 #### Augmentation Pipeline
 - **Pitch Shift**: ±2 semitones
-- **Time Stretch**: 1.2x speed variation
+- **Time Stretch**: 1.2x speed variation (1.24s → 1.49s duration changes)
 - **Noise Addition**: 0.5% amplitude noise
+- **Sample Rate**: 22050 Hz
+- **Duration**: 1.49s - 3.04s (after trimming)
 - **Total Augmented**: 32 samples (8 × 4 augmentations)
 
 #### Feature Extraction
@@ -227,7 +229,7 @@ STEP 4: TRANSACTION APPROVAL
 - **Algorithm**: XGBoost Classifier
 - **Features**: Color histogram (512 dimensions)
 - **Classes**: 3 (mapped to team members)
-- **Performance**: Optimized for demo accuracy
+- **Performance**: 90% accuracy on test set
 - **Output**: `facial_recognition_xgboost_model.joblib`
 
 ### Voiceprint Verification Model
@@ -238,10 +240,11 @@ STEP 4: TRANSACTION APPROVAL
 - **Output**: `voiceprint_verification_model.joblib`
 
 ### Product Recommendation Model
-- **Algorithm**: Random Forest with hyperparameter tuning
+- **Algorithm**: Random Forest with GridSearchCV hyperparameter tuning
 - **Features**: 15 engineered customer features
 - **Categories**: Electronics, Clothing, Books, Sports, Groceries
 - **Accuracy**: 65% on test set
+- **Best Parameters**: max_depth=None, min_samples_leaf=2, min_samples_split=2, n_estimators=300
 - **Output**: `product_recommendation_model.pkl`
 
 ## Team Members

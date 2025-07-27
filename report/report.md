@@ -34,17 +34,12 @@ This report details the comprehensive implementation of a multimodal biometric s
 **Image Augmentation Implementation:**
 ```python
 # Image augmentation pipeline
-def augment_image(image):
-    # Rotation (±15 degrees)
-    rotated = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
-    
-    # Horizontal flipping
-    flipped_h = cv2.flip(image, 1)
-    
-    # Grayscale conversion
-    grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    
-    return [image, rotated, flipped_h, grayscale]
+def augment_image(image, size=(64, 64)):
+    image = clean_image(image, size)
+    flipped = clean_image(cv2.flip(image, 1), size)
+    rotated = clean_image(cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE), size)
+    gray = clean_image(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY), size)
+    return [image, flipped, rotated, gray]
 ```
 
 **Feature Extraction Development:**
@@ -55,14 +50,14 @@ def augment_image(image):
 
 **Facial Recognition Model Training:**
 - Implemented XGBoost classifier for facial recognition
-- Optimized hyperparameters for demo accuracy
+- Achieved 90% accuracy on test set
 - Created model persistence and loading procedures
 - Developed confidence-based authentication system
 
 **Technical Achievements:**
 - Successfully processed 48 augmented images
-- Achieved optimized facial recognition accuracy for demo
-- Implemented robust feature extraction pipeline
+- Achieved 90% facial recognition accuracy on test set
+- Implemented robust feature extraction pipeline (512-dimensional color histogram)
 - Created comprehensive image processing documentation
 
 **Files Created/Modified:**
@@ -95,11 +90,20 @@ def merge_customer_data(social_profiles, transactions):
         'social_media_platform': lambda x: x.mode()[0] if not x.mode().empty else x.iloc[0]
     }).reset_index()
     
+    # Clean transactions data
+    transactions_clean = transactions.groupby('customer_id_legacy').agg({
+        'transaction_id': 'count',
+        'purchase_amount': 'sum',
+        'purchase_date': 'first',
+        'product_category': lambda x: x.mode()[0] if not x.mode().empty else x.iloc[0],
+        'customer_rating': 'mean'
+    }).reset_index()
+    
     # Merge datasets
-    merged_data = pd.merge(social_clean, transactions, 
-                          left_on='customer_id_new', 
+    merged_data = pd.merge(social_clean, transactions_clean, 
+                          left_on='customer_id', 
                           right_on='customer_id_legacy', 
-                          how='outer')
+                          how='left')
     
     return merged_data
 ```
@@ -111,9 +115,10 @@ def merge_customer_data(social_profiles, transactions):
 - Created engagement and purchase pattern metrics
 
 **Product Recommendation Model Training:**
-- Implemented Random Forest with hyperparameter tuning
-- Used GridSearchCV for optimal parameter selection
+- Implemented Random Forest with GridSearchCV hyperparameter tuning
+- Used comprehensive parameter grid: n_estimators=[100,200,300], max_depth=[None,10,20,30]
 - Achieved 65% accuracy on test set
+- Best parameters: max_depth=None, min_samples_leaf=2, min_samples_split=2, n_estimators=300
 - Created model evaluation and feature importance analysis
 
 **Technical Achievements:**
@@ -157,6 +162,12 @@ def augment_audio(y, sr):
     
     return [y, y_pitch_shifted, y_time_stretched, y_noisy]
 ```
+
+**Audio Processing Details:**
+- **Sample Rate**: 22050 Hz
+- **Original Duration**: 2.76s - 5.74s (Christophe: 2.76s, Anne: 5.74s)
+- **Trimmed Duration**: 1.49s - 3.04s (after silence removal)
+- **Processing**: Top_db=30 for silence trimming
 
 **Feature Extraction Development:**
 - Implemented MFCC feature extraction (20 coefficients)
@@ -206,12 +217,22 @@ class BiometricSecuritySystem:
     def run_full_transaction(self, user_name, image_path, audio_path):
         # Step 1: Face Authentication
         face_auth_success, predicted_user = self.authenticate_face(image_path)
+        if not face_auth_success:
+            return False
         
         # Step 2: Voice Verification
         voice_auth_success, final_user = self.verify_voice(audio_path, predicted_user)
+        if not voice_auth_success:
+            return False
         
         # Step 3: Product Recommendation
         recommended_category, user_profile = self.get_product_recommendations(final_user)
+        
+        # Step 4: Transaction Approval
+        print("All authentication steps passed successfully!")
+        print("User authorized to proceed with transaction")
+        print(f"Recommended products: {recommended_category}")
+        print("TRANSACTION COMPLETED SUCCESSFULLY!")
         
         return True
 ```
@@ -266,31 +287,39 @@ def main_menu(self):
 ### Repository Structure
 ```
 Data-Preprocessing-Group-11/
-├── Data/                          # Raw data collection
-│   ├── audios/                    # 8 original audio samples
-│   ├── pictures/                  # 12 original images
-│   └── datasets/                  # Customer data files
-├── Datasets/                      # Processed datasets
-│   ├── image_features.csv         # 48 image feature samples
-│   ├── audio_features.csv         # 32 audio feature samples
-│   └── merged_customer_data.csv   # 84 merged customer records
-├── models/                        # Trained models
+├── Data/                          
+│   ├── audios/                   
+│   ├── pictures/                  
+│   │   ├── neutral/              
+│   │   ├── smilling/            
+│   │   └── surprised/            
+│   └── datasets/                  
+│       ├── customer_social_profiles.csv
+│       └── customer_transactions.csv
+├── Datasets/                      
+│   ├── image_features.csv         
+│   ├── audio_features.csv         
+│   └── merged_customer_data.csv   
+├── models/                        
 │   ├── facial_recognition_xgboost_model.joblib
 │   ├── voiceprint_verification_model.joblib
 │   └── product_recommendation_model.pkl
-├── encoders/                      # Feature scalers
+├── encoders/                      
 │   ├── voice_feature_scaler.joblib
 │   ├── product_recommendation_scaler.pkl
 │   └── facial_recognition_label_encoder.joblib
-├── Notebooks/                     # Jupyter notebooks
+├── Notebooks/                     
 │   ├── Audio_Processing_Features.ipynb
 │   ├── Data_Merging_Product_Recommendation_Model_Training.ipynb
 │   └── Image_processing&_Facial_recognition_model.ipynb
-├── augmented/                     # 48 augmented images
-├── system_demo.py                 # Main demo application
-├── setup_demo.py                  # Environment setup
-├── requirements.txt               # Python dependencies
-└── README.md                     # Project documentation
+├── report/                        
+│   ├── report.md                  
+│   └── report.pdf                 
+├── augmented/                     
+├── system_demo.py                 
+├── setup_demo.py                  
+├── requirements.txt               
+└── README.md                     
 ```
 
 ---
@@ -316,9 +345,9 @@ Data-Preprocessing-Group-11/
 - **Output**: `audio_features.csv` with comprehensive feature set
 
 ### ✅ Model Creation
-- **Facial Recognition Model**: XGBoost classifier with color histogram features
+- **Facial Recognition Model**: XGBoost classifier with 90% accuracy on test set
 - **Voiceprint Verification Model**: Random Forest classifier with 85.71% accuracy
-- **Product Recommendation Model**: Random Forest with hyperparameter tuning (65% accuracy)
+- **Product Recommendation Model**: Random Forest with GridSearchCV hyperparameter tuning (65% accuracy)
 
 ### ✅ System Demonstration
 - **Interactive Demo**: Real-time authentication workflow
@@ -327,7 +356,7 @@ Data-Preprocessing-Group-11/
 - **Custom Transactions**: User-defined input paths
 
 ### ✅ Evaluation Metrics
-- **Accuracy**: Face (optimized), Voice (85.71%), Product (65%)
+- **Accuracy**: Face (90%), Voice (85.71%), Product (65%)
 - **F1-Score**: Comprehensive classification reports for all models
 - **Performance Tracking**: Model evaluation and validation procedures
 
