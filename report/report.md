@@ -1,6 +1,6 @@
-# User Identity and Product Recommendation System - Team Contributions Report
+# Multimodal Data Preprocessing System - Team Contributions Report
 
-**Project**: Multimodal Data Preprocessing 
+**Project**: Multimodal Data Preprocessing  
 **Course**: Machine Learning Pipeline  
 **Team**: Group 11  
 **GitHub Repository**: [https://github.com/excelasaph/Data-Preprocessing-Group-11](https://github.com/excelasaph/Data-Preprocessing-Group-11)  

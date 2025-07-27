@@ -1,4 +1,4 @@
-# User Identity and Product Recommendation System
+# Multimodal Data Preprocessing System
 
 A multimodal biometric security system that implements facial recognition, voiceprint verification, and personalized product recommendations using machine learning techniques.
 
