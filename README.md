@@ -113,7 +113,7 @@ Data-Preprocessing-Group-11/
 ## System Demo
 
 ### Demo Video
-**[Watch Demo on YouTube](https://youtube.com/watch?v=YOUR_VIDEO_ID)**
+**[Watch Demo](https://youtube.com/watch?v=YOUR_VIDEO_ID)**
 
 ### Demo Menu Options
 1. **Simulate Authorized Transaction (Anne)**
