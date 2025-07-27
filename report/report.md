@@ -1,21 +1,21 @@
 # User Identity and Product Recommendation System - Team Contributions Report
 
-**Project**: Multimodal Data Preprocessing Assignment  
-**Course**: Machine Learning Pipeline
+**Project**: Multimodal Data Preprocessing 
+**Course**: Machine Learning Pipeline  
 **Team**: Group 11  
 **GitHub Repository**: [https://github.com/excelasaph/Data-Preprocessing-Group-11](https://github.com/excelasaph/Data-Preprocessing-Group-11)  
-**Demo Video**: [Watch System Demo on YouTube](https://youtube.com/watch?v=YOUR_VIDEO_ID)
+**Demo Video**: [https://youtube.com/watch?v=YOUR_VIDEO_ID](https://youtube.com/watch?v=YOUR_VIDEO_ID)
 
 ---
 
 ## Executive Summary
 
-This report details the comprehensive implementation of a multimodal biometric security system that integrates facial recognition, voiceprint verification, and personalized product recommendations. The project successfully fulfills all assignment requirements across four main tasks, with each team member contributing significantly to different aspects of the system.
+This report details the implementation of a multimodal biometric security system that integrates facial recognition, voiceprint verification, and personalized product recommendations. The project fulfills all requirements across four main tasks, with each team member contributing significantly to different aspects of the system.
 
 ### Project Overview
-- **Data Collection**: 4 team members × 3 expressions + 2 audio phrases with comprehensive augmentation
+- **Data Collection**: 4 team members × 3 expressions + 2 audio phrases with augmentation
 - **Model Development**: 3 machine learning models (facial recognition, voice verification, product recommendation)
-- **System Integration**: Interactive demo with real-time authentication and unauthorized access simulation
+- **System Integration**: Demo with real-time authentication and unauthorized access simulation
 - **Feature Engineering**: Automated pipeline for image and audio feature extraction
 
 ---
@@ -28,8 +28,8 @@ This report details the comprehensive implementation of a multimodal biometric s
 
 **Data Collection Pipeline:**
 - Collected 12 original images (4 team members × 3 expressions)
-- Implemented comprehensive image augmentation pipeline
-- Created standardized image processing workflow
+- Implemented image augmentation pipeline
+- Created image processing workflow
 
 **Image Augmentation Implementation:**
 ```python
@@ -54,12 +54,6 @@ def augment_image(image, size=(64, 64)):
 - Created model persistence and loading procedures
 - Developed confidence-based authentication system
 
-**Technical Achievements:**
-- Successfully processed 48 augmented images
-- Achieved 90% facial recognition accuracy on test set
-- Implemented robust feature extraction pipeline (512-dimensional color histogram)
-- Created comprehensive image processing documentation
-
 **Files Created/Modified:**
 - `Data/pictures/` - Original image collection
 - `augmented/` - Augmented image storage
@@ -75,8 +69,8 @@ def augment_image(image, size=(64, 64)):
 
 **Data Merging Implementation:**
 - Merged `customer_social_profiles.csv` and `customer_transactions.csv`
-- Implemented comprehensive data cleaning and preprocessing
-- Created feature engineering pipeline for customer data
+- Implemented data cleaning and preprocessing
+- Created feature engineering pipeline for the merged customer data
 
 **Data Preprocessing Pipeline:**
 ```python
@@ -111,21 +105,20 @@ def merge_customer_data(social_profiles, transactions):
 **Feature Engineering:**
 - Created 15 engineered features for product recommendation
 - Implemented categorical encoding (one-hot encoding)
-- Developed temporal feature extraction (purchase date encoding)
+- Developed temporal feature extraction (`purchase_date` encoding)
 - Created engagement and purchase pattern metrics
 
 **Product Recommendation Model Training:**
-- Implemented Random Forest with GridSearchCV hyperparameter tuning
-- Used comprehensive parameter grid: n_estimators=[100,200,300], max_depth=[None,10,20,30]
+- Implemented **Random Forest** with **GridSearchCV** hyperparameter tuning
+- Used parameter grid: n_estimators=[100,200,300], max_depth=[None,10,20,30] to get the best parameters for the training data
 - Achieved 65% accuracy on test set
 - Best parameters: max_depth=None, min_samples_leaf=2, min_samples_split=2, n_estimators=300
 - Created model evaluation and feature importance analysis
 
-**Technical Achievements:**
-- Successfully merged 84 customer records
-- Engineered 15 predictive features
-- Achieved 65% recommendation accuracy
-- Implemented comprehensive model evaluation
+**Product Recommendation Model Metrics:**
+- `Accuracy` - 65% 
+- `F1-Score` - 61%
+- `Loss` - 0.8349
 
 **Files Created/Modified:**
 - `Data/datasets/` - Original customer datasets
