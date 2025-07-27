@@ -16,7 +16,7 @@ This report shows the implementation of a multimodal biometric security system t
 - **Data Collection**: 4 team members × 3 expressions + 2 audio phrases with augmentation
 - **Model Development**: 3 machine learning models (facial recognition, voice verification, product recommendation)
 - **System Integration**: Demo with real-time authentication and unauthorized access simulation
-- **Feature Engineering**: Automated pipeline for image and audio feature extraction
+- **Feature Engineering**: Pipeline for image and audio feature extraction
 
 ### Model Metrics
 #### Product Recommendation Model:
@@ -44,7 +44,7 @@ This report shows the implementation of a multimodal biometric security system t
 
 #### Task 1: Image Data Collection and Processing
 
-**My Approach to Image Data Collection:**
+#### My Approach to Image Data Collection:
 I started by gathering photos from all four team members, making sure to capture different facial expressions (neutral, smiling, surprised) to create a diverse dataset. This was crucial because facial recognition models need to handle variations in expressions. I organized the data systematically, storing each person's images in separate folders by expression type.
 
 **Building the Image Augmentation Pipeline:**
